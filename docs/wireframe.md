@@ -20,7 +20,7 @@
 - Save button
 
 ## Transactions
-- Search field
+- Search field with a case-insensitive toggle
 - Sort by date, description, or amount
 - Transaction details
 - Edit and Delete options
@@ -30,16 +30,18 @@
 - Default currency: USD
 - Two additional currencies and manual exchange rates
 - Import and Export JSON
+- Editable expense categories, with defaults: Food, Books, Transport, Entertainment, Fees, Other
 
 ## About and Footer
 - Purpose of the application
 - GitHub link
 - Email link
 
-## Mobile Layout
-On smaller screens, dashboard cards and the form
-will stack vertically. Transactions will be displayed
-as cards to avoid horizontal scrolling.
+## Responsive Layout and Breakpoints
+
+- Around 360px (mobile): Dashboard cards stack vertically. The transaction list uses cards to avoid horizontal scrolling.
+- Around 768px (tablet): Dashboard cards use two columns. The transaction form and spending chart can appear side by side. Transactions remain in card layout.
+- Around 1024px (desktop): Dashboard cards appear in one row. The main content uses wider columns, and transactions switch to a table with rows and columns.
 
 
 
@@ -77,5 +79,5 @@ Each transaction will be stored as an object with these fields:
 - Give every form input a visible, descriptive label.
 - Make the website usable with a keyboard, with a visible focus indicator.
 - Provide sufficient color contrast and readable text.
-- Use ARIA live regions to announce important updates, such as saving a transaction or validation errors.
+- Use ARIA live regions to announce important updates. Budget messages use `aria-live="polite"` when spending is under the limit and `aria-live="assertive"` when spending exceeds the limit. Also announce transaction saves and validation errors.
 - Add a skip link so keyboard users can jump directly to the main content.
