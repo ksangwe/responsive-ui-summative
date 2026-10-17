@@ -1,11 +1,11 @@
-const descriptionRegex = /^\s(?:.*\S)?$/;
-const amountRegex = /^\d+(\.\d{1,2})?$/;
-const dataRegex = /^\d{4}-\d{2}-\d{2}$/;
-const categoryRegex = /^[A-Za-z -]+$/;
+const descriptionRegex = /^\S(?:.*\S)?$/;
+const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
+const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
 // 2. Advanced regex: detects repeated consecutive words.
 
-const duplicateWordRegex = /\b(w+)\s+\1\b/i;
+const duplicateWordRegex = /\b(\w+)\s+\1\b/i;
 
 // 3. Description validator.
 
@@ -34,7 +34,7 @@ export function validateAmount(value) {
 // 5. Date validator.
 
 export function validateDate(value) {
-  if (!dataRegex.test(value)) {
+  if (!dateRegex.test(value)) {
     return "Date must use the YYYY-MM-DD format.";
   }
 
