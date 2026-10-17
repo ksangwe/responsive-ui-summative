@@ -155,7 +155,7 @@ section {
   min-width: 0;
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-md);
-  background-color: var(--color-border);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
@@ -167,7 +167,6 @@ section h2 {
 
 /* Dashboard placeholders */
 
-#dashboard-status,
 #dashboard-stats,
 #spending-chart,
 #transaction-list,
@@ -219,19 +218,19 @@ button {
   font: inherit;
 }
 
-input:not([type="ckeckbox"]):not([type="radio"]),
+input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
   width: 100%;
-  min-height: .75rem;
-  padding: var(--color-text);
+  min-height: 2.75rem;
+  padding: var(--spacing-sm);
   color: var(--color-text);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
 }
 
-input[type="ckeckbox"],
+input[type="checkbox"],
 input[type="radio"] {
   width: 1.15rem;
   height: 1.15rem;
@@ -335,7 +334,7 @@ footer {
   }
 
   #dashboard,
-  #transaction {
+  #transactions {
     grid-column: 1 / -1;
   }
 
@@ -361,6 +360,7 @@ footer {
   form button {
     align-self: flex-start;
   }
+}
 
   /*  9. DESKTOP LAYOUT: 1024px AND ABOVE */
 
