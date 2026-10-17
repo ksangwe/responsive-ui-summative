@@ -167,7 +167,7 @@ section h2 {
 
 /* Dashboard placeholders */
 
-#dashboard-stats,
+#dashboard-status,
 #spending-chart,
 #transaction-list,
 #category-settings {
@@ -388,7 +388,7 @@ footer {
       grid-column: span 2;
     }
 
-    #transaction {
+    #transactions {
       grid-column: 1 / -1;
     }
 
