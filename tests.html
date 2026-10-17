@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validator Tests</title>
+    <style>
+      body {
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 1rem;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+
+      .pass {
+        color: #166534;
+      }
+
+      .fail {
+        color: #b91c1c;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Validator Test Results</h1>
+    <p>Each test should display PASS.</p>
+    <ul id="results"></ul>
+
+    <script type="module">
+      import {
+        validateDescription,
+        validateAmount,
+        validateDate,
+        validateCategory
+      } from "./scripts/validators.js";
+
+      const results = document.querySelector("#results");
+
+      function check(name, actual, expected) {
+        const passed = actual === expected;
+        const item = document.createElement("li");
+
+        item.textContent = `${passed ? "PASS" : "FAIL"}: ${name}`;
+        item.className = passed ? "pass" : "fail";
+
+        results.appendChild(item);
+      }
+
+      //Description tests
+      check(
+        "Description accepts normal text",
+        validateDescription("Lunch at cafeteria"),
+        ""
+
+    );
+
+    check(
+      "Description rejects leading spaces",
+      validateDescription(" Lunch"),
+      "Description must not start or end with spaces."
+    );
+
+    check(
+      "Description rejects duplicate consecutive words",
+      validateDescription("coffee coffee"),
+      "Description must not contain repeated consecutive words."
+    );
+
+    // Amount tests
+    check("Amount accepts 12.50", validateAmount("12.50"), "");
+    check("Amount accepts 0", validateAmount("0"), "");
+
+    check(
+      "Amount rejects 007",
+      validateAmount("007"),
+      "Amount must be a number with up to 2 decimals."
+    );
+
+    check(
+      "Amount rejects 12.505",
+      validateAmount("12.505"),
+      "Amount must be a number with up to 2 decimals."
+    );
+
+    // Date tests
+    check("Date accepts YYYY-MM-DD", validateDate("2026-10-17"), "");
+
+    check(
+      "Date rejects invalid month format",
+      validateDate("2026-13-99"),
+      "Date must use the YYYY-MM-DD format."
+    );
+
+    // category tests
+    check(
+      "category accepts Fast-food", validateCategory("Fast-food"), "");
+
+    check(
+      "Category rejects --",
+      validateCategory("--"),
+      "Category must contain only letters, spaces, or hyphens."
+    );
+    </script>
+  </body>
+</html>
