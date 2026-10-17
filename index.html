@@ -25,20 +25,21 @@
     <main id="main-content">
       <section id="dashboard">
         <h2>Dashboard</h2>
+        <div id="budget-cap-message" role="status" aria-live="polite"></div>
         <div id="dashboard-status">
 
         </div>
-        <div id="spending.chart">
+        <div id="spending-chart">
 
         </div>
       </section>
 
       <section id="transactions">
-        <h2>Tranctions</h2>
+        <h2>Transactions</h2>
         <div id="transaction-search">
           <label for="search-input">Search transactions</label>
           <input type="search" id="search-input">
-          <label for="case-insenstive">Case-insensitive search</label>
+          <label for="case-insensitive">Case-insensitive search</label>
           <input type="checkbox" id="case-insensitive" checked>
         </div>
         <div id="transaction-list">
@@ -57,8 +58,8 @@
 
           <div>
             <label for="amount">Amount (USD)</label>
-            <input type="number" id="amount" name="amount"
-                   min="0.01" step="0.01" required>
+            <input type="text" id="amount" name="amount"
+                   inputmode="decimal" required>
           </div>
 
 
@@ -82,7 +83,7 @@
           <button type="submit">Save Transaction</button>
           <button type="reset">Clear Form</button>
         </form>
-        </p> id="form-status" role="status" aria-live="polite"></p>
+        <p id="form-status" role="status" aria-live="polite"></p>
       </section>
 
       <section id="settings">
@@ -104,12 +105,12 @@
         </div>
 
         <div>
-          <label for="exchange.rate-eur">USD to EUR exchange rate</label>
+          <label for="exchange-rate-eur">USD to EUR exchange rate</label>
           <input type="number" id="exchange-rate-eur" min="0.000001" step="any">
         </div>
 
         <div>
-          <label for="exchange-rate-rwf">USD to rwf exchange rate</label>
+          <label for="exchange-rate-rwf">USD to RWF exchange rate</label>
           <input type="number" id="exchange-rate-rwf" min="0.000001" step="any">
         </div>
 
@@ -121,7 +122,7 @@
         </div>
 
         <div>
-          <label for="import-file">Impor transactions (JSON)</label>
+          <label for="import-file">Import transactions (JSON)</label>
           <input type="file" id="import-file" accept=".json,application/json">
         </div>
 
@@ -132,7 +133,7 @@
       <section id="about">
         <h2>About</h2>
         <p>A simple way for university students to track expenses and manage their budget.</p>
-        <p><a href="https://github.com/ksangwe/resonsive-ui-summative">Project GitHub repository</a></p>
+        <p><a href="https://github.com/ksangwe/responsive-ui-summative">Project GitHub repository</a></p>
         <p><a href="mailto:k.sangwe@alustudent.com">Contact by email</a></p>
       </section>
     </main>
