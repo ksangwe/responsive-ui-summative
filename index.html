@@ -53,20 +53,39 @@
         <form id="transaction-form">
           <div>
             <label for="description">Description</label>
-            <input type="text" id="description" name="description" required>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              aria-describedby="description-error"
+              required
+            >
+            <p id="description-error" class="field-error"></p>
           </div>
 
 
           <div>
             <label for="amount">Amount (USD)</label>
-            <input type="text" id="amount" name="amount"
-                   inputmode="decimal" required>
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              inputmode="decimal"
+              aria-describedby="amount-error"
+              required
+            >
+              <p id="amount-error" class="field-error"></p>
           </div>
 
 
           <div>
             <label for="category">Category</label>
-            <select id="category" name="category" required>
+            <select
+              id="category"
+              name="category"
+              aria-describedby="category-error"
+              required
+            >
               <option value="Food">Food</option>
               <option value="Books">Books</option>
               <option value="Transport">Transport</option>
@@ -74,11 +93,19 @@
               <option value="Fees">Fees</option>
               <option value="Other">Other</option>
             </select>
+            <p id="category-error" class="field-error"></p>
           </div>
 
           <div>
             <label for="date">Expense date</label>
-            <input type="date" id="date" name="date" required>
+            <input
+            type="date"
+            id="date"
+            name="date"
+            aria-describedby="date-error"
+            required
+            >
+            <p id="date-error" class="field-error"></p>
           </div>
 
           <button type="submit">Save Transaction</button>
