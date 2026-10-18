@@ -12,7 +12,9 @@ const form = document.querySelector("#transaction-form");
 
 const sortSelect = document.querySelector("#sort-select");
 
-renderTransactions(getTransactions());
+renderTransactions(
+  sortTransactions(getTransactions(), sortSelect.value)
+);
 
 sortSelect.addEventListener("change", () => {
   renderTransactions(
