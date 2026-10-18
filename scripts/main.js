@@ -5,12 +5,18 @@ import {
   validateCategory
  } from "./validators.js";
 
+ import { compileRegex } from "./search.js";
+
 import { addTransaction, getTransactions, sortTransactions } from "./state.js";
 import { renderTransactions } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
 
 const sortSelect = document.querySelector("#sort-select");
+
+const searchInput = document.querySelector("#search-input");
+const caseInsensitive = document.querySelector("#case-insensitive");
+const searchStatus = document.querySelector("#search-status");
 
 renderTransactions(
   sortTransactions(getTransactions(), sortSelect.value)
@@ -21,6 +27,41 @@ sortSelect.addEventListener("change", () => {
     sortTransactions(getTransactions(), sortSelect.value)
   );
 });
+
+function updateSearch() {
+  const pattern = compileRegex(
+    searchInput.value,
+    caseInsensitive.checked ? "i" : ""
+  );
+
+  if (searchInput.value.trim() !== "" && pattern === null) {
+    searchStatus.textContent = "Invalid pattern.";
+    renderTransactions(
+      sortTransactions(getTransactions(), sortSelect.value)
+    );
+    return;
+  }
+
+  searchStatus.textContent = "";
+
+  const filteredTransactions = getTransactions().filter((transaction) => {
+    if (pattern === null) {
+      return true;
+    }
+
+    return (
+      pattern.test(transaction.description) ||
+      pattern.test(transaction.category)
+    );
+  });
+
+  renderTransactions(
+    sortTransactions(filteredTransactions, sortSelect.value)
+  );
+}
+
+searchInput.addEventListener("input", updateSearch);
+caseInsensitive.addEventListener("change", updateSearch);
 
 const descriptionInput = document.querySelector("#description");
 const descriptionError = document.querySelector("#description-error");
@@ -68,9 +109,7 @@ form.addEventListener("submit", (event) => {
     date: dateInput.value
   });
 
-  renderTransactions(
-    sortTransactions(getTransactions(), sortSelect.value)
-  );
+  updateSearch();
 
   formStatus.textContent = "Transaction saved.";
   form.reset();
