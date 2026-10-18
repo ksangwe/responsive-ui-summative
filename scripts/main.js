@@ -5,6 +5,8 @@ import {
   validateCategory
  } from "./validators.js";
 
+import { addTransaction } from "./state.js";
+
 const form = document.querySelector("#transaction-form");
 
 const descriptionInput = document.querySelector("#description");
@@ -33,4 +35,29 @@ form.addEventListener("submit", (event) => {
 
   const categoryMessage = validateCategory(categoryInput.value);
   categoryError.textContent = categoryMessage;
+
+ const formStatus = document.querySelector("#form-status");
+
+ const errors = [
+  descriptionMessage,
+  amountMessage,
+  dateMessage,
+  categoryMessage
+ ];
+
+ const allGood = errors.every((message) => message === "");
+
+ if (allGood) {
+  addTransaction({
+    description: descriptionInput.value,
+    amount: amountInput.value,
+    category: categoryInput.value,
+    date: dateInput.value
+  });
+
+  formStatus.textContent = "Transaction saved.";
+  form.reset();
+ } else {
+   formStatus.textContent = "Please fix the errors above.";
+ }
 });
