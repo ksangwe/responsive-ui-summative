@@ -24,3 +24,30 @@ export function addTransaction(data) {
 
   return newTransaction;
 }
+
+export function sortTransactions(transactions, sortKey) {
+  return [...transactions].sort((a, b) => {
+    switch (sortKey) {
+      case "date-desc":
+        return b.date.localeCompare(a.date);
+
+      case "date-asc":
+          return a.date.localeCompare(b.date);
+
+      case "description-asc":
+          return a.description.localeCompare(b.description);
+
+      case "description-desc":
+        return b.description.localeCompare(a.description);
+        
+      case "amount-asc":
+        return a.amount - b.amount;
+
+      case "amount-desc":
+        return b.amount - a.amount;
+
+      default:
+        return 0;
+    }
+  });
+}

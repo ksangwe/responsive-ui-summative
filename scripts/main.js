@@ -5,12 +5,20 @@ import {
   validateCategory
  } from "./validators.js";
 
-import { addTransaction, getTransactions } from "./state.js";
+import { addTransaction, getTransactions, sortTransactions } from "./state.js";
 import { renderTransactions } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
 
+const sortSelect = document.querySelector("#sort-select");
+
 renderTransactions(getTransactions());
+
+sortSelect.addEventListener("change", () => {
+  renderTransactions(
+    sortTransactions(getTransactions(), sortSelect.value)
+  );
+});
 
 const descriptionInput = document.querySelector("#description");
 const descriptionError = document.querySelector("#description-error");
@@ -58,7 +66,9 @@ form.addEventListener("submit", (event) => {
     date: dateInput.value
   });
 
-  renderTransactions(getTransactions());
+  renderTransactions(
+    sortTransactions(getTransactions(), sortSelect.value)
+  );
 
   formStatus.textContent = "Transaction saved.";
   form.reset();

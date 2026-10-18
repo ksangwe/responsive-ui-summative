@@ -38,6 +38,16 @@
 
       <section id="transactions">
         <h2>Transactions</h2>
+
+        <label for="sort-select">Sort transactions:</label>
+        <select id="sort-select">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="description-asc">Description: A to Z</option>
+          <option value="description-desc">Description Z to A</option>
+          <option value="amount-asc">Amount: Low to high</option>
+          <option value="amount-desc">Amount: High to low</option>
+        </select>
         <div id="transaction-search">
           <label for="search-input">Search transactions</label>
           <input type="search" id="search-input">
