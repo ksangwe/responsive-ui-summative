@@ -5,9 +5,12 @@ import {
   validateCategory
  } from "./validators.js";
 
-import { addTransaction } from "./state.js";
+import { addTransaction, getTransactions } from "./state.js";
+import { renderTransactions } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
+
+renderTransactions(getTransactions());
 
 const descriptionInput = document.querySelector("#description");
 const descriptionError = document.querySelector("#description-error");
@@ -54,6 +57,8 @@ form.addEventListener("submit", (event) => {
     category: categoryInput.value,
     date: dateInput.value
   });
+
+  renderTransactions(getTransactions());
 
   formStatus.textContent = "Transaction saved.";
   form.reset();
