@@ -11,11 +11,12 @@ import {
   addTransaction,
   deleteTransaction,
   getTransactions,
+  getStats,
   sortTransactions,
   updateTransaction
 } from "./state.js";
 
-import { renderTransactions } from "./ui.js";
+import { renderTransactions, renderStats } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
 
@@ -83,11 +84,15 @@ renderTransactions(
   sortTransactions(getTransactions(), sortSelect.value)
 );
 
+renderStats(getStats(getTransactions()));
+
 sortSelect.addEventListener("change", () => {
   updateSearch();
 });
 
 function updateSearch() {
+  renderStats(getStats(getTransactions()));
+
   const pattern = compileRegex(
     searchInput.value,
     caseInsensitive.checked ? "i" : ""

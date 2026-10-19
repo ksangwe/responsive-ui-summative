@@ -79,3 +79,42 @@ export function updateTransaction(id, data) {
 
   return transaction;
 }
+
+export function getStats(transactions) {
+  const count = transactions.length;
+
+  const total = transactions.reduce((sum, transaction) => {
+    return sum + transaction.amount;
+  }, 0);
+
+  if (count === 0) {
+    return {
+      count: 0,
+      total: 0,
+      topCategory: "None"
+    };
+  }
+
+  const categoryCounts = {};
+
+  transactions.forEach((transaction) => {
+    const category = transaction.category;
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+
+  let topCategory = "None";
+  let highestCount = 0;
+
+  Object.entries(categoryCounts).forEach(([category, categoryCount]) => {
+    if (categoryCount > highestCount) {
+      highestCount = categoryCount;
+      topCategory = category;
+    }
+  });
+
+  return {
+    count,
+    total,
+    topCategory
+  };
+}

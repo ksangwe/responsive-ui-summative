@@ -86,3 +86,22 @@ export function renderTransactions(transactions, pattern = null) {
     list.appendChild(item);
   });
 }
+
+export function renderStats(stats) {
+  const dashboard = document.querySelector("#dashboard-status");
+
+  dashboard.textContent = "";
+
+  const records = document.createElement("p");
+  records.textContent = `Total records: ${stats.count}`;
+
+  const spent = document.createElement("p");
+  spent.textContent = `Total spent: $${stats.total.toFixed(2)}`;
+
+  const category = document.createElement("p");
+  category.textContent = `Top category: ${stats.topCategory}`;
+
+  dashboard.appendChild(records);
+  dashboard.appendChild(spent);
+  dashboard.appendChild(category);
+}
