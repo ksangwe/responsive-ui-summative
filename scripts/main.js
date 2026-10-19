@@ -193,3 +193,15 @@ form.addEventListener("submit", (event) => {
   formStatus.textContent = "Please fix the errors above.";
 }
 });
+
+form.addEventListener("reset", () => {
+  editingId = null;
+
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.textContent = "Save Transaction";
+
+  descriptionError.textContent = "";
+  amountError.textContent = "";
+  dateError.textContent = "";
+  categoryError.textContent = "";
+});
