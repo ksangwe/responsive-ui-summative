@@ -105,3 +105,31 @@ export function renderStats(stats) {
   dashboard.appendChild(spent);
   dashboard.appendChild(category);
 }
+
+export function renderBudgetMessage(total, limit) {
+  const remainingMessage = document.querySelector("#budget-cap-message");
+  const alertMessage = document.querySelector("#budget-cap-alert");
+
+  remainingMessage.textContent = "";
+  alertMessage.textContent = "";
+
+  const numericLimit = Number(limit);
+
+  if (
+    limit == null ||
+    Number.isNaN(numericLimit) ||
+    numericLimit === 0
+  ) {
+    return;
+  }
+
+  const difference = numericLimit - Number(total);
+
+  if (difference >= 0) {
+    remainingMessage.textContent =
+      `Remaining budget: $${difference.toFixed(2)} of $${numericLimit.toFixed(2)}`;
+  } else {
+    alertMessage.textContent =
+     `Over budget by $${Math.abs(difference).toFixed(2)}`;
+  }
+}

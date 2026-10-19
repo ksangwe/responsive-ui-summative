@@ -12,11 +12,13 @@ import {
   deleteTransaction,
   getTransactions,
   getStats,
+  getSettings,
+  setBudgetLimit,
   sortTransactions,
   updateTransaction
 } from "./state.js";
 
-import { renderTransactions, renderStats } from "./ui.js";
+import { renderTransactions, renderStats, renderBudgetMessage } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
 
@@ -80,18 +82,30 @@ const searchInput = document.querySelector("#search-input");
 const caseInsensitive = document.querySelector("#case-insensitive");
 const searchStatus = document.querySelector("#search-status");
 
+const budgetInput = document.querySelector("#budget-limit");
+
+const savedLimit = getSettings().budgetLimit;
+
+if (savedLimit > 0) {
+  budgetInput.value = savedLimit;
+}
+
 renderTransactions(
   sortTransactions(getTransactions(), sortSelect.value)
 );
 
-renderStats(getStats(getTransactions()));
+const stats = getStats(getTransactions());
+renderStats(stats);
+renderBudgetMessage(stats.total, getSettings().budgetLimit);
 
 sortSelect.addEventListener("change", () => {
   updateSearch();
 });
 
 function updateSearch() {
-  renderStats(getStats(getTransactions()));
+  const stats = getStats(getTransactions());
+  renderStats(stats);
+  renderBudgetMessage(stats.total, getSettings().budgetLimit);
 
   const pattern = compileRegex(
     searchInput.value,
@@ -127,6 +141,11 @@ function updateSearch() {
 
 searchInput.addEventListener("input", updateSearch);
 caseInsensitive.addEventListener("change", updateSearch);
+
+budgetInput.addEventListener("input", () => {
+  setBudgetLimit(budgetInput.value);
+  updateSearch();
+});
 
 const descriptionInput = document.querySelector("#description");
 const descriptionError = document.querySelector("#description-error");
