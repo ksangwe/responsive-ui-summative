@@ -11,12 +11,15 @@ import {
   addTransaction,
   deleteTransaction,
   getTransactions,
-  sortTransactions
+  sortTransactions,
+  updateTransaction
 } from "./state.js";
 
 import { renderTransactions } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
+
+let editingId = null;
 
 const sortSelect = document.querySelector("#sort-select");
 const formStatus = document.querySelector("#form-status");
@@ -30,16 +33,46 @@ transactionsList.addEventListener("click", (event) => {
     return;
   }
 
-  const confirmed = confirm("Delete this transaction?");
+  const transactionId = button.dataset.id;
+  const action = button.dataset.action;
 
-  if (!confirmed) {
-    return;
-  }
+  if (action === "delete") {
+    const confirmed = confirm("Delete this transaction?");
 
-  deleteTransaction(button.dataset.id);
+    if (!confirmed) {
+      return;
+    }  
+  deleteTransaction(transactionId);
   updateSearch();
 
   formStatus.textContent = "Transaction deleted.";
+  return;
+  }
+
+  if (action === "edit") {
+    const transaction = getTransactions().find(
+      (item) => item.id === transactionId
+    );
+
+    if (!transaction) {
+      return;
+    }
+
+    descriptionInput.value = transaction.description;
+    amountInput.value = transaction.amount;
+    dateInput.value = transaction.date;
+    categoryInput.value = transaction.category;
+
+    editingId = transaction.id;
+
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    );
+    submitButton.textContent = "Update Transaction";
+
+    descriptionInput.focus();
+    formStatus.textContent = `Editing ${transaction.description}.`;
+  }
 });
 
 const searchInput = document.querySelector("#search-input");
@@ -127,18 +160,36 @@ form.addEventListener("submit", (event) => {
  const allGood = errors.every((message) => message === "");
 
  if (allGood) {
-  addTransaction({
-    description: descriptionInput.value,
-    amount: amountInput.value,
-    category: categoryInput.value,
-    date: dateInput.value
-  });
+  if (editingId !== null) {
+    updateTransaction(editingId, {
+      description: descriptionInput.value,
+      amount: amountInput.value,
+      category: categoryInput.value,
+      date: dateInput.value
+    });
+
+    editingId = null;
+
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    );
+    submitButton.textContent = "Save Transaction";
+
+    formStatus.textContent = "Transaction updated.";
+  } else {
+    addTransaction({
+      description: descriptionInput.value,
+      amount: amountInput.value,
+      category: categoryInput.value,
+      date: dateInput.value
+    });
+
+    formStatus.textContent = "Transaction saved.";
+  }
 
   updateSearch();
-
-  formStatus.textContent = "Transaction saved.";
   form.reset();
- } else {
-   formStatus.textContent = "Please fix the errors above.";
- }
+} else {
+  formStatus.textContent = "Please fix the errors above.";
+}
 });

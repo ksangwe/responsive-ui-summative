@@ -61,16 +61,28 @@ export function renderTransactions(transactions, pattern = null) {
     item.appendChild(category);
     item.appendChild(date);
 
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = "Delete";
-    button.setAttribute(
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.textContent = "Edit";
+    editButton.setAttribute(
+      "aria-label",
+      `Edit ${transaction.description}`
+    );
+    editButton.dataset.action = "edit";
+    editButton.dataset.id = transaction.id;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Delete";
+    deleteButton.setAttribute(
       "aria-label",
       `Delete ${transaction.description}`
     );
-    button.dataset.id = transaction.id;
+    deleteButton.dataset.action = "delete";
+    deleteButton.dataset.id = transaction.id;
 
-    item.appendChild(button);
+    item.appendChild(editButton);
+    item.appendChild(deleteButton);
     list.appendChild(item);
   });
 }
