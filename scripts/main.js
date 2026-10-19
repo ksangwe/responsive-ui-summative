@@ -7,6 +7,8 @@ import {
 
  import { compileRegex } from "./search.js";
 
+ import { renderSpendingTrend } from "./trend.js";
+
 import {
   addTransaction,
   deleteTransaction,
@@ -97,6 +99,7 @@ renderTransactions(
 const stats = getStats(getTransactions());
 renderStats(stats);
 renderBudgetMessage(stats.total, getSettings().budgetLimit);
+renderSpendingTrend(getTransactions());
 
 sortSelect.addEventListener("change", () => {
   updateSearch();
@@ -106,6 +109,7 @@ function updateSearch() {
   const stats = getStats(getTransactions());
   renderStats(stats);
   renderBudgetMessage(stats.total, getSettings().budgetLimit);
+  renderSpendingTrend(getTransactions());
 
   const pattern = compileRegex(
     searchInput.value,
