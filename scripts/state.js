@@ -59,3 +59,23 @@ export function sortTransactions(transactions, sortKey) {
     }
   });
 }
+
+export function updateTransaction(id, data) {
+  const transaction = transactions.find(
+    (item) => item.id === id
+  );
+
+  if (!transaction) {
+    return null;
+  }
+
+  transaction.description = data.description;
+  transaction.amount = Number(data.amount);
+  transaction.category = data.category;
+  transaction.date = data.date;
+  transaction.updatedAt = new Date().toISOString();
+
+  saveTransactions(transactions);
+
+  return transaction;
+}
