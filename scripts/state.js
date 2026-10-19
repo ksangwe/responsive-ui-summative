@@ -1,9 +1,24 @@
-import { loadTransactions, saveTransactions } from "./storage.js";
+import { 
+  loadTransactions, 
+  saveTransactions,
+  loadSettings,
+  saveSettings
+} from "./storage.js";
 
 let transactions = loadTransactions();
+let settings = loadSettings();
 
 export function getTransactions() {
   return transactions;
+}
+
+export function getSettings() {
+  return settings;
+}
+
+export function setBudgetLimit(value) {
+  settings.budgetLimit = Number(value);
+  saveSettings(settings);
 }
 
 export function addTransaction(data) {
