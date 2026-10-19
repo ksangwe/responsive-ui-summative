@@ -293,6 +293,13 @@ button[type="reset"]:hover {
   color: var(--color-danger);
 }
 
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.9rem;
+  margin: 0;
+  min-height: 1.25rem;
+}
+
 /* 7. FOOTER */
 
 footer {
@@ -413,4 +420,12 @@ footer {
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  /* Highlight matching search text */
+  mark {
+    background-color: #fff2a8;
+    color: #222222;
+    padding: 0 2px;
+    border-radius: 2px;
   }

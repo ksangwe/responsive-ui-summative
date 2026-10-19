@@ -1,14 +1,17 @@
 function highlightText(element, text, pattern) {
-  if (!pattern) {
-    element.textContent = text;
+  if (pattern === null) {
+    element.appendChild(document.createTextNode(text));
     return;
   }
 
-  const regex = new RegExp(pattern.source, pattern.flags);
-  let lastIndex = 0;
-  let match;
+  const flags = pattern.flags.includes("g")
+  ? pattern.flags
+  : pattern.flags + "g";
 
-  while ((match = regex.exec(text)) !== null) {
+  const regex = new RegExp(pattern.source, flags);
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(regex)) {
     element.appendChild(
       document.createTextNode(text.slice(lastIndex, match.index))
     );
@@ -18,22 +21,21 @@ function highlightText(element, text, pattern) {
     element.appendChild(mark);
 
     lastIndex = match.index + match[0].length;
-
-    if (match[0].length === 0) {
-      regex.lastIndex++;
-    }
   }
 
   element.appendChild(document.createTextNode(text.slice(lastIndex)));
 }
-export function renderTransactions(transactions) {
+
+export function renderTransactions(transactions, pattern = null) {
   const list = document.querySelector("#transaction-list");
 
   list.textContent = "";
 
   if (transactions.length === 0) {
     const message = document.createElement("p");
-    message.textContent = "No transactions yet. Add one below.";
+    message.textContent = pattern
+      ? "No matching transactions."
+      : "No transactions yet. Add one below.";
     list.appendChild(message);
     return;
   }
@@ -42,14 +44,15 @@ export function renderTransactions(transactions) {
     const item = document.createElement("article");
 
     const description = document.createElement("h3");
-    highlightText(description, transaction.description);
+    highlightText(description, transaction.description, pattern);
 
     const amount = document.createElement("p");
     amount.textContent = `Amount: $${transaction.amount}`;
 
     const category = document.createElement("p");
-    category.textContent = `Category: ${transaction.category}`;
-
+    category.appendChild(document.createTextNode("Category: "));
+    highlightText(category, transaction.category, pattern);
+  
     const date = document.createElement("p");
     date.textContent = `Date: ${transaction.date}`;
 

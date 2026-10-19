@@ -56,7 +56,8 @@ function updateSearch() {
   });
 
   renderTransactions(
-    sortTransactions(filteredTransactions, sortSelect.value)
+    sortTransactions(filteredTransactions, sortSelect.value),
+    pattern
   );
 }
 
