@@ -25,6 +25,14 @@ export function addTransaction(data) {
   return newTransaction;
 }
 
+export function deleteTransaction(id) {
+  transactions = transactions.filter(
+    (transaction) => transaction.id !== id
+  );
+
+  saveTransactions(transactions);
+}
+
 export function sortTransactions(transactions, sortKey) {
   return [...transactions].sort((a, b) => {
     switch (sortKey) {

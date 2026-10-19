@@ -61,6 +61,16 @@ export function renderTransactions(transactions, pattern = null) {
     item.appendChild(category);
     item.appendChild(date);
 
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = "Delete";
+    button.setAttribute(
+      "aria-label",
+      `Delete ${transaction.description}`
+    );
+    button.dataset.id = transaction.id;
+
+    item.appendChild(button);
     list.appendChild(item);
   });
 }

@@ -7,12 +7,40 @@ import {
 
  import { compileRegex } from "./search.js";
 
-import { addTransaction, getTransactions, sortTransactions } from "./state.js";
+import {
+  addTransaction,
+  deleteTransaction,
+  getTransactions,
+  sortTransactions
+} from "./state.js";
+
 import { renderTransactions } from "./ui.js";
 
 const form = document.querySelector("#transaction-form");
 
 const sortSelect = document.querySelector("#sort-select");
+const formStatus = document.querySelector("#form-status");
+
+const transactionsList = document.querySelector("#transaction-list");
+
+transactionsList.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+
+  if (!button || !button.dataset.id) {
+    return;
+  }
+
+  const confirmed = confirm("Delete this transaction?");
+
+  if (!confirmed) {
+    return;
+  }
+
+  deleteTransaction(button.dataset.id);
+  updateSearch();
+
+  formStatus.textContent = "Transaction deleted.";
+});
 
 const searchInput = document.querySelector("#search-input");
 const caseInsensitive = document.querySelector("#case-insensitive");
@@ -23,9 +51,7 @@ renderTransactions(
 );
 
 sortSelect.addEventListener("change", () => {
-  renderTransactions(
-    sortTransactions(getTransactions(), sortSelect.value)
-  );
+  updateSearch();
 });
 
 function updateSearch() {
@@ -90,8 +116,6 @@ form.addEventListener("submit", (event) => {
 
   const categoryMessage = validateCategory(categoryInput.value);
   categoryError.textContent = categoryMessage;
-
- const formStatus = document.querySelector("#form-status");
 
  const errors = [
   descriptionMessage,
